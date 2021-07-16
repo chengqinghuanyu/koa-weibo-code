@@ -1,0 +1,22 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-07-16 20:52:43
+ * @LastEditTime: 2021-07-16 20:59:30
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /koa2-weibo-code/src/routes/blog-list.ejs
+-->
+<ul>
+    <% blogList.forEach(blog=> { %>
+
+
+        <li data-id="<%= blog.id %>">
+            <%= blog.title %>
+        </li>
+
+
+        <% }) %>
+</ul>
+<script>
+    console.log(666);
+</script>

@@ -1,11 +1,37 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-07-15 21:03:11
+ * @LastEditTime: 2021-07-16 20:57:09
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /koa2-weibo-code/src/views/index.ejs
+-->
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>EJS Welcome to <%= title %></p>
-  </body>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <h1>
+    <%= title %>
+  </h1>
+  <p>EJS Welcome to <%= title %>
+  </p>
+  <div>
+    <%= msg %>
+  </div>
+  <div>
+    <%= locals.name %>
+  </div>
+  <hr>
+  <%- include('widgets/user-info.ejs',{isMe}) %>
+    <hr>
+    <%- include('widgets/blog-list.ejs',{blogList}) %>
+</body>
+
 </html>
