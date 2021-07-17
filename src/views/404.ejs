@@ -1,0 +1,22 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-07-17 12:00:37
+ * @LastEditTime: 2021-07-17 12:06:23
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /nodejs/koa2-weibo-code/src/views/404.ejs
+-->
+<% -include('./layerout/header.ejs') { title:'微博-错误页面',isNav:true %>
+    <div class="container margin-top-20">
+        <div class="row">
+            <div class="col-8">
+                <h4 class="margin-bottom-20">
+                    <% title %>
+                </h4>
+                <p>非常抱歉，服务器出错了，请<a href="#">返回首页</a></p>
+
+            </div>
+
+        </div>
+    </div>
+    <% -include('./layerout/footer') { title:'微博-错误页面',isNav:true %>
