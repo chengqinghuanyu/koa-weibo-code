@@ -1,16 +1,14 @@
 /*
  * @Author: your name
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-07-17 11:58:05
+ * @LastEditTime: 2021-07-17 20:49:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo-code/src/routes/index.js
  */
-const router = require('koa-router')()
-
+const router = require('koa-router')();
 router.get('/', async (ctx, next) => {
   //异步读取数据
-
   await ctx.render('index', {
     title: 'Hello Koa 2!',
     msg: '你好',
@@ -28,19 +26,19 @@ router.get('/', async (ctx, next) => {
       id: 4,
       title: 'ddd'
     }]
-  })
-})
+  });
+});
 
 router.get('/string', async (ctx, next) => {
   //debugger
-  ctx.body = 'koa2 string'
-})
+  ctx.body = 'koa2 string';
+});
 
 router.get('/json', async (ctx, next) => {
   ctx.body = {
     title: 'koa2 json'
-  }
-})
+  };
+});
 
 router.get('/profile/:userName', async (ctx, next) => {
   let {
@@ -49,8 +47,8 @@ router.get('/profile/:userName', async (ctx, next) => {
   ctx.body = {
     title: 'this is profile',
     userName
-  }
-})
+  };
+});
 router.get('/loadMore/:userName/:pageIndex', async (ctx, next) => {
   let {
     userName,
@@ -60,6 +58,6 @@ router.get('/loadMore/:userName/:pageIndex', async (ctx, next) => {
     title: 'this is loadMoreAPI',
     userName,
     pageIndex
-  }
-})
-module.exports = router
+  };
+});
+module.exports = router;

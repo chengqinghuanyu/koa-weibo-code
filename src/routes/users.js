@@ -1,23 +1,21 @@
 /*
  * @Author: your name
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-07-15 22:31:39
+ * @LastEditTime: 2021-07-17 20:41:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo-code/src/routes/users.js
  */
-const router = require('koa-router')()
-
-router.prefix('/users')
-
+const router = require('koa-router')();
+router.prefix('/users');
 router.get('/', function (ctx, next) {
-  ctx.body = 'this is a users response!'
-})
-
+  ctx.body = 'this is a users response!';
+});
 router.get('/bar', function (ctx, next) {
-  ctx.body = 'this is a users/bar response'
-})
-router.post('/login', async (ctx, next) => {
+  ctx.body = 'this is a users/bar response';
+});
+
+router.post('/login', function (ctx, next) {
   //ctx.body被占用只能用ctx.request.body
   const {
     userName,
@@ -27,7 +25,7 @@ router.post('/login', async (ctx, next) => {
     tag: 200,
     userName,
     passWord
-  }
-})
+  };
+});
 
-module.exports = router
+module.exports = router;

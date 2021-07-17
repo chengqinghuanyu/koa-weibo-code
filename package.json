@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=dev ./node_modules/.bin/nodemon  --inspect=9229 bin/www",
     "prd": "cross-env NODE_ENV=production pm2 start bin/www",
-    "test": ""
+    "test": "",
+    "lint": "eslint --ext .js src"
   },
   "dependencies": {
     "debug": "^4.1.1",
@@ -20,10 +21,17 @@
     "koa-static": "^5.0.0",
     "koa-views": "^6.2.0",
     "mysql2": "^2.2.5",
+    "redis": "^3.1.2",
     "sequelize": "^6.6.5"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.2",
     "cross-env": "^7.0.3",
-    "nodemon": "^1.19.1"
-  }
+    "eslint": "^4.19.1",
+    "nodemon": "^1.19.1",
+    "pre-commit": "^1.2.2"
+  },
+  "pre-commit": [
+    "lint"
+  ]
 }
