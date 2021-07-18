@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-17 11:43:03
- * @LastEditTime: 2021-07-17 19:48:11
+ * @LastEditTime: 2021-07-18 19:58:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /nodejs/koa2-weibo-code/src/conf/db.js
@@ -45,5 +45,6 @@ if (isProd) {
     };
 };
 module.exports = {
-    REDIS_CONFIG
+    REDIS_CONFIG,
+    MYSQL_CONFIG
 };

@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-17 19:00:29
- * @LastEditTime: 2021-07-17 19:44:54
+ * @LastEditTime: 2021-07-18 20:14:42
  * @LastEditors: Please set LastEditors
  * @Description: mysql链接数据库
  * @FilePath: /nodejs/koa2-weibo-code/src/db/req.js
@@ -14,6 +14,7 @@ const Sequelize = require('sequelize');
 const {
     MYSQL_CONFIG
 } = require('../conf/db.js');
+console.log(MYSQL_CONFIG);
 const {
     host,
     user,

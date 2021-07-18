@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-07-18 09:21:31
+ * @LastEditTime: 2021-07-18 18:06:43
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /nodejs/koa2-weibo-code/src/app.js
@@ -25,6 +25,7 @@ const {
 const index = require('./routes/index');
 const users = require('./routes/users');
 const errorViewRouter = require('./routes/views/error.js');
+const usersView = require('./routes/views/user.js');
 
 // error handler
 let onerrorConf = {};
@@ -79,6 +80,7 @@ app.use(session({
 // routes
 app.use(index.routes(), index.allowedMethods());
 app.use(users.routes(), users.allowedMethods());
+app.use(usersView.routes(), usersView.allowedMethods());
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()); //404路由注册到最下面
 
 // error-handling
