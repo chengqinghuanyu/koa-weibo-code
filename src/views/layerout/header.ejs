@@ -1,22 +1,48 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-17 12:05:24
- * @LastEditTime: 2021-07-17 17:43:13
+ * @LastEditTime: 2021-07-18 08:58:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: /nodejs/koa2-weibo-code/src/views/header.ejs
+ * @FilePath: /nodejs/koa2-weibo-code/src/views/layerout/header.ejs
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="utf-8">
+    <title>微博<%= title %>
+    </title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
+
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">微博</a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">首页</a></li>
+                    <li><a href="/profile">我的空间</a></li>
+                    <li>
+                        <a href="/square">
+                            广场
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/setting">
+                            设置
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
 </body>
 

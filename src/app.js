@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-07-17 19:51:43
+ * @LastEditTime: 2021-07-18 09:21:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /nodejs/koa2-weibo-code/src/app.js
@@ -13,13 +13,29 @@ const json = require('koa-json');
 const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
+const session = require('koa-generic-session');
+const redisStore = require('koa-redis');
+const {
+  REDIS_CONFIG
+} = require('./conf/db.js');
+const {
+  isProd
+} = require('./utils/env.js');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
+const errorViewRouter = require('./routes/views/error.js');
 
 // error handler
-onerror(app);
+let onerrorConf = {};
 
+if (isProd) {
+  //线上环境跳转error，开发环境直接抛出错误方便修改
+  onerrorConf = {
+    redirect: '/error',
+  };
+}
+onerror(app, onerrorConf);
 // middlewares
 app.use(bodyparser({
   enableTypes: ['json', 'form', 'text']
@@ -40,9 +56,30 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
 
+//session配置
+app.keys = ['QGO_$@_Vx_0908_session'];
+app.use(session({
+  key: 'weibo_sid', //cookie name 默认是weibosid;
+  prefix: 'weibo:sess:', //redis key前缀默认是koa:sess
+  cookie: {
+    path: '/',
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24, //ms
+
+  },
+  //redis设置过期时间ttl和cookie一致做到同步过期。
+  //ttl: 1000 * 60 * 60 * 24, //ms,
+  store: redisStore({
+    //redis存储，如果登陆都会创建一个用户的配置
+    all: `${REDIS_CONFIG.host}:${REDIS_CONFIG.prot}`
+  })
+}));
+
+
 // routes
 app.use(index.routes(), index.allowedMethods());
 app.use(users.routes(), users.allowedMethods());
+app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()); //404路由注册到最下面
 
 // error-handling
 app.on('error', (err, ctx) => {

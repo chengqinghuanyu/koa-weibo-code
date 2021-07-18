@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-07-17 20:41:12
+ * @LastEditTime: 2021-07-18 09:22:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo-code/src/routes/users.js
@@ -12,6 +12,7 @@ router.get('/', function (ctx, next) {
   ctx.body = 'this is a users response!';
 });
 router.get('/bar', function (ctx, next) {
+  //debugger
   ctx.body = 'this is a users/bar response';
 });
 

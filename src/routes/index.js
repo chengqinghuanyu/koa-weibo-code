@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-07-17 20:49:18
+ * @LastEditTime: 2021-07-18 09:18:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo-code/src/routes/index.js
@@ -35,8 +35,18 @@ router.get('/string', async (ctx, next) => {
 });
 
 router.get('/json', async (ctx, next) => {
+
+  //debugger
+  //没有使用 的话才会存储数据在redis里面
+  const session = ctx.session;
+  if (!session.viewNum) {
+    session.viewNum = 0;
+  }
+  // session.viewNum += 1;
+  // throw Error();
   ctx.body = {
-    title: 'koa2 json'
+    title: 'koa2 json',
+    viewNum: session.viewNum
   };
 });
 
