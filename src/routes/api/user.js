@@ -1,20 +1,33 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-07-29 22:12:33
+ * @LastEditTime: 2021-07-31 20:00:04
  * @LastEditors: Please set LastEditors
  * @Description: 用户API
  * @FilePath: /koa2-weibo-code/src/routes/users.js
  */
 const router = require('koa-router')();
 const {
-  isExist
+  isExist,
+  register
 } = require('../../controller/user.js');
 router.prefix('/api/users');
 router.get('/', function (ctx, next) {
   ctx.body = 'this is a users response!';
 });
 router.post('/registry', async (ctx, next) => {
+  const {
+    userName,
+    password,
+    gender
+  } = ctx.request.body;
+  ctx.body = await register({
+    userName,
+    password,
+    gender
+  });
+
+  //调用register控制器
 
 });
 

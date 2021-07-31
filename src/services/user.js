@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-18 20:27:39
- * @LastEditTime: 2021-07-31 19:03:20
+ * @LastEditTime: 2021-07-31 20:38:52
  * @LastEditors: Please set LastEditors
  * @Description: 用户的服务逻辑 user service
  * @FilePath: /nodejs/koa2-weibo-code/src/services/user.js
@@ -43,6 +43,43 @@ async function getUserInfo(userName, password) {
     console.log('输出用户查找结果', result);
     return formatRes;
 }
+/**
+ * //创建用户--数层是按增删改查来命名
+ * @param {
+     string
+ }
+ userName 用户名
+ * @param {
+     string
+ }
+ password 密码
+
+  @param {
+      number
+  }
+  gender 性别
+  @param {
+      string
+  }
+  nickName 昵称
+  */
+async function createUser({
+    userName,
+    password,
+    gender = 3,
+    nickName = userName
+}) {
+    const user = await User.create({
+        userName,
+        password,
+        gender,
+        nickName: nickName ? nickName : userName
+    });
+    return user.dataValues;
+
+}
+
 module.exports = {
-    getUserInfo
+    getUserInfo,
+    createUser
 };

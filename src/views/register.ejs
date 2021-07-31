@@ -1,7 +1,7 @@
 <!--
  * @Author: 尹鹏孝
  * @Date: 2021-07-18 12:00:55
- * @LastEditTime: 2021-07-29 22:11:43
+ * @LastEditTime: 2021-07-31 20:03:09
  * @LastEditors: Please set LastEditors
  * @Description: 注册
  * @FilePath: /nodejs/koa2-weibo-code/src/views/registor.ejs
@@ -48,7 +48,7 @@
             <label class="layui-form-label">用户名</label>
             <div class="layui-input-block">
                 <input id="username" type="text" name="username" lay-verify="title" autocomplete="off"
-                    placeholder="请输入用户名" class="layui-input">
+                    placeholder="请输入用户名" maxlength="20" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -66,6 +66,15 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" name="sex" value="男" title="男" checked="">
+                <input type="radio" name="sex" value="女" title="女">
+                <input type="radio" name="sex" value="保密" title="保密">
+
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label"></label>
             <div class="layui-input-block">
                 <button type="button" id="subButton" class="layui-btn layui-btn-normal">注册</button>
@@ -75,7 +84,7 @@
     <%- include('layerout/footer', { title:'微博-错误页面',isNav:true }) %>
         <script>
             $(function () {
-                let getRgistry = () => {
+                let getRegistry = () => {
                     let userName = $("#username").val();
                     let password = $("#password").val();
                     let repassword = $("#respassword").val();
@@ -95,12 +104,20 @@
                         layer.msg('密码不一致');
                         return
                     }
+                    //提交性别转换
+                    let gender = $("input[name='sex']").val() == '男' ? 1 : $("input[name='sex']").val() == '女' ? 2 : 3;
                     $.post('/api/users/registry', {
                         userName: $("#username").val(),
                         password: $("#password").val(),
-                        repassword: $("#respassword").val()
+                        repassword: $("#respassword").val(),
+                        gender: gender
                     }).then(res => {
-
+                        if (res.data) {
+                            layer.msg('注册成功正在跳往登陆页面。');
+                            window.location.href = "/login"
+                        } else {
+                            layer.msg('注册失败。');
+                        }
                     })
                 }
                 $("#subButton").on("click", () => {
@@ -109,10 +126,12 @@
                         console.log(res);
 
                         if (res.errno === 10003) {
-                            getRgistry();
+                            getRegistry();
                         } else if (res.errno === 0) {
                             layer.msg(res.msg);
 
+                        } else {
+                            layer.msg(res.data.userName + '已经存在');
                         }
                     })
 

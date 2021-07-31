@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-07-18 20:22:06
+ * @LastEditTime: 2021-07-31 20:16:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /nodejs/koa2-weibo-code/src/app.js
@@ -21,11 +21,15 @@ const {
 const {
   isProd
 } = require('./utils/env.js');
-
+const {
+  SESSION_SECRET_KEY
+} = require('./conf/secretKeys.js');
 const index = require('./routes/index');
 const userApiRouter = require('./routes/api/user');
 const errorViewRouter = require('./routes/views/error.js');
 const usersView = require('./routes/views/user.js');
+
+
 
 // error handler
 let onerrorConf = {};
@@ -58,7 +62,7 @@ app.use(async (ctx, next) => {
 });
 
 //session配置
-app.keys = ['QGO_$@_Vx_0908_session'];
+app.keys = [SESSION_SECRET_KEY];
 app.use(session({
   key: 'weibo_sid', //cookie name 默认是weibosid;
   prefix: 'weibo:sess:', //redis key前缀默认是koa:sess
