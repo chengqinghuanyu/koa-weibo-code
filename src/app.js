@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-07-18 18:06:43
+ * @LastEditTime: 2021-07-18 20:22:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /nodejs/koa2-weibo-code/src/app.js
@@ -23,7 +23,7 @@ const {
 } = require('./utils/env.js');
 
 const index = require('./routes/index');
-const users = require('./routes/users');
+const userApiRouter = require('./routes/api/user');
 const errorViewRouter = require('./routes/views/error.js');
 const usersView = require('./routes/views/user.js');
 
@@ -79,7 +79,8 @@ app.use(session({
 
 // routes
 app.use(index.routes(), index.allowedMethods());
-app.use(users.routes(), users.allowedMethods());
+//用户注册，登陆API
+app.use(userApiRouter.routes(), userApiRouter.allowedMethods());
 app.use(usersView.routes(), usersView.allowedMethods());
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()); //404路由注册到最下面
 

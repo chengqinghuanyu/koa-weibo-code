@@ -1,7 +1,7 @@
 <!--
  * @Author: 尹鹏孝
  * @Date: 2021-07-18 12:00:55
- * @LastEditTime: 2021-07-18 19:38:08
+ * @LastEditTime: 2021-07-29 22:11:43
  * @LastEditors: Please set LastEditors
  * @Description: 注册
  * @FilePath: /nodejs/koa2-weibo-code/src/views/registor.ejs
@@ -75,17 +75,47 @@
     <%- include('layerout/footer', { title:'微博-错误页面',isNav:true }) %>
         <script>
             $(function () {
-                $("#subButton").on("click", () => {
-                    $.post('/users/isExist', {}).then(res => {
-
-                    })
-                    $.post('/users/registry', {
+                let getRgistry = () => {
+                    let userName = $("#username").val();
+                    let password = $("#password").val();
+                    let repassword = $("#respassword").val();
+                    if (!userName) {
+                        layer.msg('用户名不能为空');
+                        return
+                    }
+                    if (!password) {
+                        layer.msg('密码不能为空');
+                        return
+                    }
+                    if (!repassword) {
+                        layer.msg('确认密码不能为空');
+                        return
+                    }
+                    if (password !== repassword) {
+                        layer.msg('密码不一致');
+                        return
+                    }
+                    $.post('/api/users/registry', {
                         userName: $("#username").val(),
                         password: $("#password").val(),
                         repassword: $("#respassword").val()
                     }).then(res => {
 
                     })
+                }
+                $("#subButton").on("click", () => {
+                    const userName = $("#username").val();
+                    $.post('/api/users/isExist', { userName }, res => {
+                        console.log(res);
+
+                        if (res.errno === 10003) {
+                            getRgistry();
+                        } else if (res.errno === 0) {
+                            layer.msg(res.msg);
+
+                        }
+                    })
+
                 })
             })
         </script>

@@ -1,19 +1,29 @@
 /*
- * @Author: your name
+ * @Author: 尹鹏孝
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-07-18 09:22:55
+ * @LastEditTime: 2021-07-29 22:12:33
  * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
+ * @Description: 用户API
  * @FilePath: /koa2-weibo-code/src/routes/users.js
  */
 const router = require('koa-router')();
-router.prefix('/users');
+const {
+  isExist
+} = require('../../controller/user.js');
+router.prefix('/api/users');
 router.get('/', function (ctx, next) {
   ctx.body = 'this is a users response!';
 });
-router.get('/bar', function (ctx, next) {
-  //debugger
-  ctx.body = 'this is a users/bar response';
+router.post('/registry', async (ctx, next) => {
+
+});
+
+router.post('/isExist', async (ctx, next) => {
+  const {
+    userName
+  } = ctx.request.body;
+  ctx.body = await isExist(userName);
+  console.log('输出接口最后结果：', ctx.body);
 });
 
 router.post('/login', function (ctx, next) {
@@ -28,7 +38,4 @@ router.post('/login', function (ctx, next) {
     passWord
   };
 });
-
-
-
 module.exports = router;
