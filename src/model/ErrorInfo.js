@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-29 21:31:06
- * @LastEditTime: 2021-07-31 19:33:25
+ * @LastEditTime: 2021-08-01 10:47:16
  * @LastEditors: Please set LastEditors
  * @Description: 失败信息集合包括error number 和msg
  * @FilePath: /nodejs/koa2-weibo-code/src/model/ErrInfo.js
@@ -36,5 +36,31 @@ module.exports = {
     changePasswordFail: {
         errno: 10006,
         msg: '修改密码失败'
-    }
+    },
+    //上传文件失败
+    uploadFail: {
+        errno: 10007,
+        msg: '上传文件失败'
+    },
+    //修改基本信息失败
+    changeInfoFailInfo: {
+        errno: 10008,
+        msg: '修改基本信息失败'
+    },
+    //数据格式校验错误
+    jsonSchemaFailInfo: {
+        errno: 10009,
+        msg: '数据格式校验错误'
+    },
+    //数据格式校验错误
+    deleteUserFailInfo: {
+        errno: 10010,
+        msg: '删除用户失败'
+    },
+    //添加关注失败
+    addFollowerFailInfo: {
+        errno: 10011,
+        msg: '添加关注失败'
+    },
+
 };

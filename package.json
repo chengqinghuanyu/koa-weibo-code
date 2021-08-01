@@ -9,6 +9,7 @@
     "lint": "eslint --ext .js src"
   },
   "dependencies": {
+    "ajv": "^8.6.2",
     "debug": "^4.1.1",
     "ejs": "~2.3.3",
     "koa": "^2.7.0",
