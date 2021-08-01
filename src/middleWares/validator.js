@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-08-01 10:13:11
- * @LastEditTime: 2021-08-01 11:04:48
+ * @LastEditTime: 2021-08-01 12:02:52
  * @LastEditors: Please set LastEditors
  * @Description: 中间件验证
  * @FilePath: /nodejs/koa2-weibo-code/src/middlewares/validates.js
@@ -23,7 +23,9 @@ function genValidator(validateFn) {
     async function validator(ctx, next) {
         //校验
         const data = ctx.request.body;
+        console.log('输出数据：', data);
         const error = validateFn(data);
+        console.log('中间件校验：', error);
         if (error) {
             //校验失败
             ctx.body = new ErrorModel(jsonSchemaFailInfo);

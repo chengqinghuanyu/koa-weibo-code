@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-31 20:47:05
- * @LastEditTime: 2021-08-01 11:08:47
+ * @LastEditTime: 2021-08-01 12:42:47
  * @LastEditors: Please set LastEditors
  * @Description: 用户信息验证
  * @FilePath: /nodejs/koa2-weibo-code/src/validator/user.js
@@ -42,9 +42,7 @@ const SCHEMA = {
             minLength: 2,
         },
         gender: {
-            type: 'number',
-            maxLength: 3,
-            minLength: 1,
+            type: 'string',
         }
     }
 };

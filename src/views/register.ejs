@@ -1,7 +1,7 @@
 <!--
  * @Author: 尹鹏孝
  * @Date: 2021-07-18 12:00:55
- * @LastEditTime: 2021-08-01 11:07:24
+ * @LastEditTime: 2021-08-01 12:44:04
  * @LastEditors: Please set LastEditors
  * @Description: 注册
  * @FilePath: /nodejs/koa2-weibo-code/src/views/registor.ejs
@@ -110,11 +110,14 @@
                         userName: $("#username").val(),
                         password: $("#password").val(),
                         repassword: $("#respassword").val(),
-                        gender: gender
+                        gender: Number(gender)
                     }).then(res => {
-                        if (res.data) {
+                        debugger
+                        if (res.errno === 0) {
                             layer.msg('注册成功正在跳往登陆页面。');
                             window.location.href = "/login"
+                        } else if (res.errno === 10003) {
+                            layer.msg(res.msg);
                         } else {
                             //debugger
                             layer.msg(res.msg);

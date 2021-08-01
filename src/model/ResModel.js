@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-29 21:17:45
- * @LastEditTime: 2021-07-31 19:02:34
+ * @LastEditTime: 2021-08-01 12:36:27
  * @LastEditors: Please set LastEditors
  * @Description: class模型
  * @FilePath: /nodejs/koa2-weibo-code/src/model/ResModel.js
@@ -31,7 +31,7 @@ class BaseModel {
 class SuccessModel extends BaseModel {
     constructor(data = {}) {
         super({
-            error: 0,
+            errno: 0,
             data
         });
     }
