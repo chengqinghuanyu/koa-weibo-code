@@ -1,13 +1,17 @@
 /*
  * @Author: your name
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-07-18 09:18:36
+ * @LastEditTime: 2021-08-05 22:16:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo-code/src/routes/index.js
  */
 const router = require('koa-router')();
-router.get('/', async (ctx, next) => {
+const {
+  loginCheck,
+  loginRedirect
+} = require('../middleWares/loginChecks.js');
+router.get('/', loginRedirect, async (ctx, next) => {
   //异步读取数据
   await ctx.render('index', {
     title: 'Hello Koa 2!',
