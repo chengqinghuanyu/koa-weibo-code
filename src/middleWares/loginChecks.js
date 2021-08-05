@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-08-05 21:37:17
- * @LastEditTime: 2021-08-05 22:11:01
+ * @LastEditTime: 2021-08-05 22:20:42
  * @LastEditors: Please set LastEditors
  * @Description: 登陆验证
  * @FilePath: /nodejs/koa2-weibo-code/src/middleWares/loginChecks.js
@@ -9,7 +9,6 @@
 const {
     ErrorModel
 } = require('../model/ResModel.js');
-
 const {
     loginCheckedFailInfo
 } = require('../model/ErrorInfo.js');
@@ -42,4 +41,4 @@ async function loginRedirect(ctx, next) {
 module.exports = {
     loginCheck,
     loginRedirect
-}
+};
