@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-08-07 17:36:51
+ * @LastEditTime: 2021-08-07 20:43:32
  * @LastEditors: Please set LastEditors
  * @Description: 用户API
  * @FilePath: /koa2-weibo-code/src/routes/users.js
@@ -13,7 +13,9 @@ const {
   register,
   login,
   deleteCurrentUser,
-  changeInfo
+  changeInfo,
+  changePassword,
+  logout
 } = require('../../controller/user.js');
 
 const userValidate = require('../../validator/user.js');
@@ -92,5 +94,31 @@ router.patch('/changeInfo', genValidator(userValidate), async (ctx, next) => {
     city,
     picture
   });
+});
+/**
+ * 修改密码
+ * 
+ */
+router.patch('/changePassword', genValidator(userValidate), async (ctx, next) => {
+  const {
+    newPassword,
+    password
+  } = ctx.request.body;
+  const {
+    userName
+  } = ctx.session.userInfo;
+  //controller;
+  const result = await changePassword({
+    userName,
+    password,
+    newPassword,
+  });
+  ctx.body = result;
+
+});
+
+router.post('/logout', loginCheck, async (ctx, next) => {
+  //controller;
+  ctx.body = await logout(ctx);
 });
 module.exports = router;

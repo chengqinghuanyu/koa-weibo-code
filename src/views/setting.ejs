@@ -1,7 +1,7 @@
 <!--
  * @Author: 尹鹏孝
  * @Date: 2021-08-07 09:24:30
- * @LastEditTime: 2021-08-07 18:57:36
+ * @LastEditTime: 2021-08-07 20:39:24
  * @LastEditors: Please set LastEditors
  * @Description: 设置页面
  * @FilePath: /nodejs/koa2-weibo-code/src/views/settings.ejs
@@ -126,7 +126,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label"></label>
             <div class="layui-input-block">
-                <input type="submit" id="submitInfo" name="submit" class="layui-input">
+                <input type="submit" id="submitInfo" name="submit" value="保存" class="layui-input">
             </div>
         </div>
     </div>
@@ -147,7 +147,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-
+            <label class="layui-form-label">确认密码</label>
             <div class="layui-input-block">
                 <input type="password" id="submitPassword" name="submitPassword" placeholder="确认密码" class="layui-input">
             </div>
@@ -156,7 +156,13 @@
         <div class="layui-form-item">
             <label class="layui-form-label"></label>
             <div class="layui-input-block">
-                <input type="submit" id="saveSubmitPassword" name="submit" class="layui-input">
+                <input type="submit" id="saveSubmitPassword" value="保存" name="submit" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block">
+                <input type="submit" id="logout" name="logout" value="退出登陆" class="layui-input ">
             </div>
         </div>
 
@@ -224,4 +230,63 @@
                     }
                 })
             })
+            //修改密码
+            //更新用户基本信息
+            $("#saveSubmitPassword").on("click", function () {
+                let userInfo = {};
+                let password = $("#password").val();
+                let newPassword = $("#newPassword").val();
+                let submitPassword = $("#submitPassword").val();
+                if (!password) {
+                    layer.msg('原始密码不能为空');
+                    return;
+                }
+                if (password == newPassword) {
+                    layer.msg('原始密码和新密码一致');
+                    return;
+                }
+                if (submitPassword != newPassword) {
+                    layer.msg('新密码和确认密码不相等');
+                    return;
+                }
+                if (password) {
+                    userInfo.password = password;
+                }
+                if (newPassword) {
+                    userInfo.newPassword = newPassword;
+                }
+
+                userInfo.userName = "<%= userName %>";
+                console.log('输出数据格式', userInfo);
+                $.ajax({
+                    url: "/api/users/changePassword",
+                    type: "patch",
+                    dataType: "json",
+                    cache: false,
+                    data: JSON.stringify(userInfo),
+                    processData: false,// 不处理数据
+                    contentType: 'application/json', // 不设置内容类型
+                    success: function (res) {
+                        layer.msg('更新成功');
+                    }
+                })
+            });
+            $("#logout").on("click", function () {
+                let userInfo = {}
+                $.ajax({
+                    url: "/api/users/logout",
+                    type: "post",
+                    dataType: "json",
+                    cache: false,
+                    data: JSON.stringify(userInfo),
+                    processData: false,// 不处理数据
+                    contentType: 'application/json', // 不设置内容类型
+                    success: function (res) {
+                        layer.msg('退出登陆成功');
+                        window.location.href = '/login';
+                    }
+                })
+            })
+
+
         </script>

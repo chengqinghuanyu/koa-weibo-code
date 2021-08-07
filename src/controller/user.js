@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-18 20:23:42
- * @LastEditTime: 2021-08-07 18:55:01
+ * @LastEditTime: 2021-08-07 20:35:32
  * @LastEditors: Please set LastEditors
  * @Description: 用户路由
  * @FilePath: /nodejs/koa2-weibo-code/src/controller/user.js
@@ -18,7 +18,8 @@ const {
     registerFailInfo,
     loginFailInfo,
     deleteUserFailInfo,
-    changeInfoFailInfo
+    changeInfoFailInfo,
+    changePasswordFail
 } = require('../model/ErrorInfo.js');
 const {
     ErrorModel,
@@ -160,12 +161,40 @@ async function changeInfo(ctx, {
     }
     return new ErrorModel(changeInfoFailInfo);
 }
-
-
+/**
+ * 修改密码
+ * @param {object} param0 userName:用户名, password:密码, newPassword：要修改的密码
+ */
+async function changePassword({
+    userName,
+    password,
+    newPassword
+}) {
+    const result = await updateUser({
+        newPassword: doCrypto(newPassword),
+    }, {
+        userName,
+        password: doCrypto(password),
+    });
+    if (result) {
+        return new SuccessModel();
+    }
+    return new ErrorModel(changePasswordFail);
+}
+/**
+ * 退出
+ * @param {object} ctx 
+ */
+async function logout(ctx) {
+    delete ctx.session.userInfo;
+    return new SuccessModel();
+}
 module.exports = {
     isExist,
     register,
     login,
     deleteCurrentUser,
-    changeInfo
+    changeInfo,
+    changePassword,
+    logout
 };
