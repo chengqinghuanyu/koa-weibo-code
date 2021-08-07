@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-18 20:27:39
- * @LastEditTime: 2021-08-07 09:09:40
+ * @LastEditTime: 2021-08-07 18:47:15
  * @LastEditors: Please set LastEditors
  * @Description: 用户的服务逻辑 user service
  * @FilePath: /nodejs/koa2-weibo-code/src/services/user.js
@@ -77,8 +77,59 @@ async function deleteUser(userName) {
     });
     return result > 0;
 }
+/**
+ * 修改用户信息
+ * @param {
+     Object
+ }
+ param0 要修改的内容newPassword：新密码, newNickname：新昵称, newCity：新城市, newPicture：新的头像
+ * @param {
+     object
+ }
+ param1 userName：原始用户名, password：原始密码
+ */
+async function updateUser({
+    newPassword,
+    newNickname,
+    newCity,
+    newPicture
+}, {
+    userName,
+    password
+}) {
+    //拼接内容
+    let updateData = {};
+    if (newPassword) {
+        updateData.password = newPassword;
+    }
+    if (newNickname) {
+        updateData.nickName = newNickname;
+    }
+    if (newPicture) {
+        updateData.picture = newPicture;
+    }
+    if (newCity) {
+        updateData.city = newCity;
+    }
+    //拼接查询条件
+    let whereData = {
+        userName: userName
+    };
+    if (password) {
+        whereData.password = password;
+    }
+    //执行修改
+    console.log('查询', whereData);
+    console.log('更新', updateData);
+    const result = await User.update(updateData, {
+        'where': whereData
+    });
+    console.log('返回结果', result);
+    return result[0] > 0; //修改的行数
+}
 module.exports = {
     getUserInfo,
     createUser,
-    deleteUser
+    deleteUser,
+    updateUser
 };

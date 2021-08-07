@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-18 20:23:42
- * @LastEditTime: 2021-08-06 22:32:14
+ * @LastEditTime: 2021-08-07 18:55:01
  * @LastEditors: Please set LastEditors
  * @Description: 用户路由
  * @FilePath: /nodejs/koa2-weibo-code/src/controller/user.js
@@ -9,14 +9,16 @@
 const {
     getUserInfo,
     createUser,
-    deleteUser
+    deleteUser,
+    updateUser
 } = require('../services/user.js');
 const {
     registerUserNameNotExistInfo,
     registerUserNameExistInfo,
     registerFailInfo,
     loginFailInfo,
-    deleteUserFailInfo
+    deleteUserFailInfo,
+    changeInfoFailInfo
 } = require('../model/ErrorInfo.js');
 const {
     ErrorModel,
@@ -119,11 +121,51 @@ async function deleteCurrentUser(userName) {
     }
     return new ErrorModel(deleteUserFailInfo);
 }
+/**
+ * 修改个人信息
+ * @param {Object} ctx koa2 ctx 
+ * @param {string} param1 nickname:姓名，city：城市，picture:个人头像 
+ */
+async function changeInfo(ctx, {
+    nickName,
+    city,
+    picture
+}) {
+    const {
+        userName
+    } = ctx.session.userInfo;
+    if (!nickName) {
+        userName = userName;
+    }
+    //service
+    console.log('更新前入参');
+    console.log(userName);
+    const result = await updateUser({
+        newNickname: nickName,
+        newCity: city,
+        newPicture: picture
+    }, {
+        userName
+    });
+    console.log('更新后',
+        result);
+    if (result) {
+        //执行成功
+        Object.assign(ctx.session.userInfo, {
+            nickName,
+            city,
+            picture
+        });
+        return new SuccessModel();
+    }
+    return new ErrorModel(changeInfoFailInfo);
+}
 
 
 module.exports = {
     isExist,
     register,
     login,
-    deleteCurrentUser
+    deleteCurrentUser,
+    changeInfo
 };

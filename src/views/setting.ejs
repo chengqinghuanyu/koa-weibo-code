@@ -1,7 +1,7 @@
 <!--
  * @Author: 尹鹏孝
  * @Date: 2021-08-07 09:24:30
- * @LastEditTime: 2021-08-07 12:09:33
+ * @LastEditTime: 2021-08-07 18:57:36
  * @LastEditors: Please set LastEditors
  * @Description: 设置页面
  * @FilePath: /nodejs/koa2-weibo-code/src/views/settings.ejs
@@ -69,8 +69,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">昵称</label>
             <div class="layui-input-block">
-                <input id="nickName" type="text" name="nickName" lay-verify="title" autocomplete="off" placeholder="昵称"
-                    maxlength="20" class="layui-input">
+                <input id="nickName" type="text" value="<%= nickName %>" name="nickName" lay-verify="title"
+                    autocomplete="off" placeholder="昵称" maxlength="20" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -110,7 +110,7 @@
             <div class="layui-input-block">
                 <div class="picture-box">
                     <div class="close"></div>
-                    <img id="myPicture">
+                    <img id="myPicture" src="<%= picture %>">
                 </div>
                 <div class="layui-upload-drag" id="test10">
                     <input type="file" name="file" id="file" accept="image/*">
@@ -123,6 +123,16 @@
                 </div>
             </div>
         </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block">
+                <input type="submit" id="submitInfo" name="submit" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form" style="margin: 0 10px; max-width: 1140px;">
+
+
         <div class="layui-form-item">
             <label class="layui-form-label">密码</label>
             <div class="layui-input-block">
@@ -144,9 +154,9 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">确认密码</label>
+            <label class="layui-form-label"></label>
             <div class="layui-input-block">
-                <input type="submit" id="submit" name="submit" class="layui-input">
+                <input type="submit" id="saveSubmitPassword" name="submit" class="layui-input">
             </div>
         </div>
 
@@ -156,7 +166,12 @@
     <%- include('layerout/footer', { title:'微博-错误页面',isNav:true }) %>
 
         <script>
-            $("#myPicture").attr('src', `https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg`);
+            let picture = '';
+            let myPic = "<%= picture %>";
+            if (!myPic) {
+                $("#myPicture").attr('src', `https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=550723927,1346838877&fm=27&gp=0.jpg`);
+            }
+
             //首先监听input框的变动，选中一个新的文件会触发change事件
             $("#file").on("input", function () {
                 //获取到选中的文件
@@ -176,10 +191,37 @@
                     contentType: false, // 不设置内容类型
                     success: function (res) {
                         $(".picture-box").show();
+                        picture = res.data.url;
                         $("#myPicture").attr('src', `/${res.data.url}`);
 
                         layer.msg('上传成功');
                     }
                 })
             });
+
+            //更新用户基本信息
+            $("#submitInfo").on("click", function () {
+                let userInfo = {};
+                let nickName = $("#nickName").val();
+                if (nickName) {
+                    userInfo.nickName = nickName;
+                }
+                if (picture) {
+                    userInfo.picture = picture;
+                }
+                userInfo.userName = "<%= userName %>";
+                console.log('输出数据格式', userInfo);
+                $.ajax({
+                    url: "/api/users/changeInfo",
+                    type: "patch",
+                    dataType: "json",
+                    cache: false,
+                    data: JSON.stringify(userInfo),
+                    processData: false,// 不处理数据
+                    contentType: 'application/json', // 不设置内容类型
+                    success: function (res) {
+                        layer.msg('更新成功');
+                    }
+                })
+            })
         </script>
