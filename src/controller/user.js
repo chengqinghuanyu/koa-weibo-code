@@ -1,20 +1,22 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-18 20:23:42
- * @LastEditTime: 2021-08-01 12:35:39
+ * @LastEditTime: 2021-08-06 22:32:14
  * @LastEditors: Please set LastEditors
  * @Description: 用户路由
  * @FilePath: /nodejs/koa2-weibo-code/src/controller/user.js
  */
 const {
     getUserInfo,
-    createUser
+    createUser,
+    deleteUser
 } = require('../services/user.js');
 const {
     registerUserNameNotExistInfo,
     registerUserNameExistInfo,
     registerFailInfo,
-    loginFailInfo
+    loginFailInfo,
+    deleteUserFailInfo
 } = require('../model/ErrorInfo.js');
 const {
     ErrorModel,
@@ -103,15 +105,25 @@ async function login(ctx, userName, password) {
 
     }
     return new SuccessModel();
-
-
-
 }
 
+/**
+ * 删除用户
+ * @param {string} userName 用户名
+ */
+async function deleteCurrentUser(userName) {
+    //service
+    const result = await deleteUser(userName);
+    if (result) {
+        return new SuccessModel();
+    }
+    return new ErrorModel(deleteUserFailInfo);
+}
 
 
 module.exports = {
     isExist,
     register,
-    login
+    login,
+    deleteCurrentUser
 };
