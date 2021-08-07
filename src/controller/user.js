@@ -1,11 +1,12 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-18 20:23:42
- * @LastEditTime: 2021-08-07 20:35:32
+ * @LastEditTime: 2021-08-07 22:06:42
  * @LastEditors: Please set LastEditors
  * @Description: 用户路由
  * @FilePath: /nodejs/koa2-weibo-code/src/controller/user.js
  */
+require('iconv-lite').encodingExists('foo');
 const {
     getUserInfo,
     createUser,
@@ -36,7 +37,7 @@ async function isExist(userName) {
     //services 获取数据
     //统一返回格式
     const userInfo = await getUserInfo(userName);
-    console.log('crl输出用户信息：', userInfo);
+    //console.log('crl输出用户信息：', userInfo);
     if (userInfo) {
         //统一返回已存在
         return new SuccessModel(userInfo);
@@ -61,17 +62,17 @@ async function register({
 }) {
     //统一返回格式
     const userInfo = await getUserInfo(userName);
-    console.log('crl输出用户信息：', userInfo);
+    //console.log('crl输出用户信息：', userInfo);
     if (userInfo) {
-        console.log('查询到用户');
+        //console.log('查询到用户');
         //统一返回已存在
         return new ErrorModel(registerUserNameExistInfo);
     }
     try {
-        console.log('未查询到用户');
-        console.log(password);
+        // console.log('未查询到用户');
+        // console.log(password);
         password = doCrypto(password);
-        console.log(password);
+        //console.log(password);
         await createUser({
             userName,
             password,
@@ -93,9 +94,9 @@ async function register({
  */
 async function login(ctx, userName, password) {
     //登陆成功
-    console.log(password);
+    //console.log(password);
     password = doCrypto(password);
-    console.log(password);
+    //console.log(password);
     const userInfo = await getUserInfo(userName, password);
 
     if (!userInfo) {
@@ -132,15 +133,17 @@ async function changeInfo(ctx, {
     city,
     picture
 }) {
-    const {
-        userName
-    } = ctx.session.userInfo;
+    // const {
+    //     userName
+    // } = ctx.session.userInfo;
+    //console.log("输出更新住户信息：",ctx.session);
+    const userName = ctx.session.userInfo ? ctx.session.userInfo.userName : '';
     if (!nickName) {
         userName = userName;
     }
     //service
-    console.log('更新前入参');
-    console.log(userName);
+    // console.log('更新前入参');
+    // console.log(userName);
     const result = await updateUser({
         newNickname: nickName,
         newCity: city,
@@ -148,8 +151,7 @@ async function changeInfo(ctx, {
     }, {
         userName
     });
-    console.log('更新后',
-        result);
+    //console.log('更新后', result);
     if (result) {
         //执行成功
         Object.assign(ctx.session.userInfo, {

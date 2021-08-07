@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-08-07 20:43:32
+ * @LastEditTime: 2021-08-07 22:01:21
  * @LastEditors: Please set LastEditors
  * @Description: 用户API
  * @FilePath: /koa2-weibo-code/src/routes/users.js
@@ -39,7 +39,7 @@ router.post('/registry', genValidator(userValidate), async (ctx, next) => {
     password,
     gender
   } = ctx.request.body;
-  console.log('registry', ctx.request.body);
+  //console.log('registry', ctx.request.body);
   ctx.body = await register({
     userName,
     password,
@@ -54,10 +54,10 @@ router.post('/isExist', async (ctx, next) => {
   const {
     userName
   } = ctx.request.body;
-  console.log('输出接口最后结果------：', ctx.request.body);
+  //console.log('输出接口最后结果------：', ctx.request.body);
   ctx.body = await isExist(userName);
 
-  console.log('输出接口最后结果：', ctx.body);
+  //console.log('输出接口最后结果：', ctx.body);
 });
 
 router.post('/login', async function (ctx, next) {
@@ -67,7 +67,7 @@ router.post('/login', async function (ctx, next) {
     password
   } = ctx.request.body;
   //校验controller
-  console.log('登陆输入信息', ctx.request.body);
+  //console.log('登陆输入信息', ctx.request.body);
   ctx.body = await login(ctx, userName, password);
 });
 router.post('/delete', loginCheck, async (ctx, next) => {
@@ -89,6 +89,9 @@ router.patch('/changeInfo', genValidator(userValidate), async (ctx, next) => {
     picture
   } = ctx.request.body;
   //controller
+  // console.log('nickName', nickName);
+  // console.log('city', city);
+  // console.log('picture', picture);
   ctx.body = await changeInfo(ctx, {
     nickName,
     city,
@@ -104,9 +107,8 @@ router.patch('/changePassword', genValidator(userValidate), async (ctx, next) =>
     newPassword,
     password
   } = ctx.request.body;
-  const {
-    userName
-  } = ctx.session.userInfo;
+  const
+    userName = ctx.session.userInfo ? ctx.session.userInfo.userName : "";
   //controller;
   const result = await changePassword({
     userName,
