@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-08-05 22:13:49
+ * @LastEditTime: 2021-08-07 11:52:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /nodejs/koa2-weibo-code/src/app.js
@@ -15,6 +15,9 @@ const bodyparser = require('koa-bodyparser');
 const logger = require('koa-logger');
 const session = require('koa-generic-session');
 const redisStore = require('koa-redis');
+const koaStatic = require('koa-static');
+const path = require('path');
+
 const {
   REDIS_CONFIG
 } = require('./conf/db.js');
@@ -28,6 +31,7 @@ const index = require('./routes/index');
 const userApiRouter = require('./routes/api/user');
 const errorViewRouter = require('./routes/views/error.js');
 const usersView = require('./routes/views/user.js');
+const utilsApiRouter = require('./routes/api/utils.js');
 
 
 
@@ -47,8 +51,10 @@ app.use(bodyparser({
 }));
 app.use(json());
 app.use(logger());
-app.use(require('koa-static')(__dirname + '/public'));
-
+app.use(koaStatic(__dirname + '/public'));
+const ulrFile = path.join(__dirname, '..', 'uploadFiles');
+console.log('输出地址，', ulrFile);
+app.use(koaStatic(ulrFile));
 app.use(views(__dirname + '/views', {
   extension: 'ejs'
 }));
@@ -86,8 +92,10 @@ app.use(index.routes(), index.allowedMethods());
 //用户注册，登陆API
 app.use(userApiRouter.routes(), userApiRouter.allowedMethods());
 app.use(usersView.routes(), usersView.allowedMethods());
-app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()); //404路由注册到最下面
+//注册图片上传
+app.use(utilsApiRouter.routes(), utilsApiRouter.allowedMethods());
 
+app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()); //404路由注册到最下面
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx);

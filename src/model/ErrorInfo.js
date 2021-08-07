@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-29 21:31:06
- * @LastEditTime: 2021-08-01 10:47:16
+ * @LastEditTime: 2021-08-07 10:36:17
  * @LastEditors: Please set LastEditors
  * @Description: 失败信息集合包括error number 和msg
  * @FilePath: /nodejs/koa2-weibo-code/src/model/ErrInfo.js
@@ -38,9 +38,9 @@ module.exports = {
         msg: '修改密码失败'
     },
     //上传文件失败
-    uploadFail: {
+    uploadFailSizeInfo: {
         errno: 10007,
-        msg: '上传文件失败'
+        msg: '上传文件体积过大'
     },
     //修改基本信息失败
     changeInfoFailInfo: {

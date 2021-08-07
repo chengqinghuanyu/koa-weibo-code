@@ -1,12 +1,15 @@
 /*
  * @Author: your name
  * @Date: 2021-07-18 18:02:42
- * @LastEditTime: 2021-08-01 16:13:52
+ * @LastEditTime: 2021-08-07 12:12:14
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /nodejs/koa2-weibo-code/src/routes/views/user.js
  */
 const router = require('koa-router')();
+const {
+    loginRedirect
+} = require('../../middleWares/loginChecks.js');
 router.get('/register', async (ctx, next) => {
     await ctx.render('register', {
         title: '用户注册'
@@ -37,6 +40,12 @@ router.get('/register', async (ctx, next) => {
     await ctx.render('register', {
         title: '用户注册',
         ...getLoginInfo(ctx)
+    });
+});
+router.get('/setting', loginRedirect, async (ctx, next) => {
+    await ctx.render('setting', {
+        title: '用户修改信息',
+        ...ctx.session.userInfo
     });
 });
 module.exports = router;
