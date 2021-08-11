@@ -1,0 +1,26 @@
+<!--
+ * @Author: 尹鹏孝
+ * @Date: 2021-08-08 09:50:05
+ * @LastEditTime: 2021-08-08 20:48:31
+ * @LastEditors: Please set LastEditors
+ * @Description: 微博输入组件
+ * @FilePath: /nodejs/koa2-weibo-code/src/views/widgets/input.ejs
+-->
+
+<div class="layui-form-text">
+    <div class="layui-input-block">
+        <textarea class="layui-textarea" id="weibo_textarea" name="desc" row=3 maxlength="140"
+            placeholder="发布微博"></textarea>
+        <input type="hidden" id="image_value">
+        <input type="file" id="file_picture" style="display: none;opacity: 0;">
+    </div>
+    <div class="layui-input-block">
+        <div class="layui-input-inlne" style="margin-top:10px;">
+            <button type="submit" class="layui-btn" id="submit" lay-submit="" lay-filter="submit">提交</button>
+            <button type="button" id="content_picture" class="layui-btn layui-btn-warm">发布图片</button>
+        </div>
+
+
+    </div>
+
+</div>

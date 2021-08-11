@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-18 20:23:42
- * @LastEditTime: 2021-08-07 22:06:42
+ * @LastEditTime: 2021-08-11 21:44:47
  * @LastEditors: Please set LastEditors
  * @Description: 用户路由
  * @FilePath: /nodejs/koa2-weibo-code/src/controller/user.js
@@ -98,7 +98,8 @@ async function login(ctx, userName, password) {
     password = doCrypto(password);
     //console.log(password);
     const userInfo = await getUserInfo(userName, password);
-
+    ctx.session.userInfo = null;
+    console.log(userInfo);
     if (!userInfo) {
         //登陆失败
         return new ErrorModel(loginFailInfo);
@@ -106,7 +107,6 @@ async function login(ctx, userName, password) {
     if (ctx.session.userInfo == null) {
         //登陆成功
         ctx.session.userInfo = userInfo;
-
     }
     return new SuccessModel();
 }
@@ -189,6 +189,7 @@ async function changePassword({
  */
 async function logout(ctx) {
     delete ctx.session.userInfo;
+    console.log('输出session：', ctx.session.userInfo);
     return new SuccessModel();
 }
 module.exports = {

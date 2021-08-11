@@ -1,25 +1,89 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-07-18 17:53:28
+ * @LastEditTime: 2021-08-11 21:57:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /koa2-weibo-code/src/views/index.ejs
 -->
 <%- include('layerout/header',{ title:'微博-错误页面',isNav:true}) %>
-  <h1>
-    <%= title %>
-  </h1>
-  <p>EJS Welcome to <%= title %>
-  </p>
-  <div>
-    <%= msg %>
+
+  <div class="layui-row" style="margin-top:10px;">
+    <div class="layui-col-xs12 layui-col-md8">
+      <div>
+
+        <%- include('widgets/input.ejs')%>
+      </div>
+
+    </div>
+    <div class="layui-col-xs6 layui-col-md4">
+      右侧
+    </div>
   </div>
-  <div>
-    <%= locals.name %>
-  </div>
-  <hr>
-  <%- include('widgets/user-info.ejs',{isMe}) %>
-    <hr>
-    <%- include('widgets/blog-list.ejs',{blogList}) %>
-      <%- include('layerout/footer', { title:'微博-错误页面',isNav:true }) %>
+  <%- include('layerout/footer', { title:'微博-错误页面',isNav:true }) %>
+    <script>
+      $(function () {
+        $("#submit").on("click", function () {
+          var value = $("#weibo_textarea").val();
+          var image = $("#image_value").val();
+          if (!value) {
+            layer.msg('发布微博内容不能为空！');
+            return;
+          };
+          let data = {
+            content: value,
+            image: image ? image : "",
+          }
+          $.ajax({
+            url: "/api/blogs/create",
+            type: "post",
+            dataType: "json",
+            cache: false,
+            data: JSON.stringify(data),
+            processData: false,// 不处理数据
+            contentType: 'application/json', // 不设置内容类型
+            success: function (res) {
+              layer.msg('更新成功');
+              $("#weibo_textarea").val("");
+            }
+          })
+        });
+        var picture = $("#file_picture");
+        picture.change(function (e) {
+          var myFile = picture[0].files[0];
+          var title = myFile.name;
+          var formData = new FormData();
+          formData.append("file", myFile);
+          $.ajax({
+            url: "/api/utils/upload",
+            type: "post",
+            dataType: "json",
+            cache: false,
+            data: formData,
+            processData: false,// 不处理数据
+            contentType: false, // 不设置内容类型
+            success: function (res) {
+              console.log(res);
+
+              if (res.errno == 0) {
+                layer.msg('上传成功');
+                $("#image_value").val(res.data.url);
+
+              } else {
+                $("#image_value").val("");
+                layer.msg(res.data.msg);
+              }
+              document.getElementById("file_picture").value = '';
+
+            }
+          })
+
+        })
+
+        $("#content_picture").on("click", function (e) {
+          console.log(e);
+          e.preventDefault();
+          picture.click();
+        })
+      })
+    </script>

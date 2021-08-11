@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-08-08 09:22:03
- * @LastEditTime: 2021-08-08 09:25:17
+ * @LastEditTime: 2021-08-11 21:09:34
  * @LastEditors: Please set LastEditors
  * @Description: 微博模型
  * @FilePath: /nodejs/koa2-weibo-code/src/db/model/Blog.js
@@ -16,10 +16,11 @@ const {
 } = require('../types.js');
 //微博
 const Blog = seq.define('blog', {
+
     userId: {
         type: INTEGER,
         allowNull: false,
-        unique: true,
+        unique: false,
         comment: '用户名ID'
     },
     content: {
@@ -29,7 +30,8 @@ const Blog = seq.define('blog', {
     },
     image: {
         type: STRING,
-        comment: '图片地址'
+        comment: '图片地址',
+        allowNull: true,
     }
 });
 module.exports = {

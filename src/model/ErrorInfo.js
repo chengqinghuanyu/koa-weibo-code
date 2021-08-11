@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-29 21:31:06
- * @LastEditTime: 2021-08-07 10:36:17
+ * @LastEditTime: 2021-08-08 20:31:28
  * @LastEditors: Please set LastEditors
  * @Description: 失败信息集合包括error number 和msg
  * @FilePath: /nodejs/koa2-weibo-code/src/model/ErrInfo.js
@@ -62,5 +62,20 @@ module.exports = {
         errno: 10011,
         msg: '添加关注失败'
     },
+    //取消关注失败
+    deleteFollowFailInfo: {
+        errno: 10012,
+        msg: '取消关注失败'
+    },
+    //创建微博失败
+    createBlogFailInfo: {
+        errno: 11001,
+        msg: '创建微博失败，请重新创建'
+    },
+    //删除微博失败
+    deleteBlogFailInfo: {
+        errno: 11002,
+        msg: '删除微博失败'
+    }
 
 };

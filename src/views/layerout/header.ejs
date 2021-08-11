@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2021-07-17 12:05:24
- * @LastEditTime: 2021-07-18 18:16:32
+ * @LastEditTime: 2021-08-11 21:40:42
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /nodejs/koa2-weibo-code/src/views/layerout/header.ejs
@@ -60,8 +60,30 @@
                 <dd><a href="">电商平台</a></dd>
             </dl>
         </li>
-        <li class="layui-nav-item"><a href="">社区</a></li>
+        <li class="layui-nav-item"><span href="/api/users/logout" id="logout">退出</span></li>
     </ul>
+    <script>
+        let button = document.getElementById("logout");
+        button.addEventListener('click', () => {
+            var xmlHttp;
+            if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlHttp = new XMLHttpRequest();
+            }
+            else {// code for IE6, IE5
+                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                    //alert('退出了');
+                    window.location.href = '/';
+                }
+            }
+            xmlHttp.open("POST", "/api/users/logout?t=" + Math.random(), true);
+            xmlHttp.send();
+
+        })
+    </script>
 </body>
 
 </html>

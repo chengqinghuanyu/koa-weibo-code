@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-08-07 22:01:21
+ * @LastEditTime: 2021-08-11 21:23:20
  * @LastEditors: Please set LastEditors
  * @Description: 用户API
  * @FilePath: /koa2-weibo-code/src/routes/users.js
@@ -68,6 +68,7 @@ router.post('/login', async function (ctx, next) {
   } = ctx.request.body;
   //校验controller
   //console.log('登陆输入信息', ctx.request.body);
+  console.log(ctx.session);
   ctx.body = await login(ctx, userName, password);
 });
 router.post('/delete', loginCheck, async (ctx, next) => {
