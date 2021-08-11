@@ -2,7 +2,7 @@
 import { session } from 'express-session';
  * @Author: 尹鹏孝
  * @Date: 2021-08-08 20:13:55
- * @LastEditTime: 2021-08-11 21:59:12
+ * @LastEditTime: 2021-08-11 22:10:42
  * @LastEditors: Please set LastEditors
  * @Description: 微博首页路由
  * @FilePath: /nodejs/koa2-weibo-code/src/routes/api/blog-home.js
@@ -14,9 +14,13 @@ const {
 const {
     create
 } = require('../../controller/blog-home.js');
+const blogValidate = require('../../validator/user.js');
+const {
+    genValidator
+} = require('../../middleWares/validator.js');
 router.prefix('/api/blogs');
 //创建路由
-router.post('/create', loginCheck, async (ctx, next) => {
+router.post('/create', loginCheck, genValidator(blogValidate), async (ctx, next) => {
     const {
         content,
         image
@@ -27,8 +31,8 @@ router.post('/create', loginCheck, async (ctx, next) => {
         id: userId
     } = ctx.session.userInfo;
     //controller；
-    console.log('输出ctx:', ctx.session);
-    console.log('输出ctx:', ctx.request.body);
+    //console.log('输出ctx:', ctx.session);
+    //console.log('输出ctx:', ctx.request.body);
     ctx.body = await create({
         userId,
         content,

@@ -1,11 +1,12 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-08-08 20:18:51
- * @LastEditTime: 2021-08-11 21:59:01
+ * @LastEditTime: 2021-08-11 22:03:32
  * @LastEditors: Please set LastEditors
  * @Description: 首页微博
  * @FilePath: /nodejs/koa2-weibo-code/src/controller/blog-home.js
  */
+const xss = require('xss');
 
 const {
     SuccessModel,
@@ -31,7 +32,7 @@ async function create({
         console.log('ctrol:', userId);
         const blog = await createBlog({
             userId,
-            content,
+            content: xss(content),
             image
         });
         return new SuccessModel(blog);
