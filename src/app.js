@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-07-15 21:03:11
- * @LastEditTime: 2021-08-21 17:24:14
+ * @LastEditTime: 2021-08-22 11:11:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /nodejs/koa2-weibo-code/src/app.js
@@ -30,6 +30,7 @@ const {
 const blogViewRouter = require('./routes/views/blog.js');
 const blogApisRouter = require('./routes/api/blog-home.js');
 const blogProfileApiRouter = require('./routes/api/blog-profile.js');
+const blogSquareApiRouter = require('./routes/api/blog-square.js');
 const userApiRouter = require('./routes/api/user');
 const errorViewRouter = require('./routes/views/error.js');
 const usersView = require('./routes/views/user.js');
@@ -95,6 +96,8 @@ app.use(blogApisRouter.routes(), blogApisRouter.allowedMethods());
 
 //微博住户页面
 app.use(blogProfileApiRouter.routes(), blogProfileApiRouter.allowedMethods());
+//微博主页
+app.use(blogSquareApiRouter.routes(), blogSquareApiRouter.allowedMethods());
 //用户注册，登陆API
 app.use(userApiRouter.routes(), userApiRouter.allowedMethods());
 app.use(usersView.routes(), usersView.allowedMethods());

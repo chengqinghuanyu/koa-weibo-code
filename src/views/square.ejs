@@ -1,0 +1,43 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-08-22 10:36:38
+ * @LastEditTime: 2021-08-22 11:41:06
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /nodejs/koa2-weibo-code/src/views/square.ejs
+-->
+<%- include('layerout/header',{ title:'微博-个人主页',isNav:true}) %>
+
+    <div class="layui-row">
+        <div class="layui-col-md8">
+
+            <h4>
+                <%= blogData.userName %>
+            </h4>
+
+            <% if(blogData.isEmpty) { %>
+                <div>
+                    暂无数据
+
+                </div>
+
+                <% } else { %>
+
+                    <div>
+                        <%- include('widgets/blog-list',{ blogList:blogData.blogList }) %>
+                    </div>
+                    <% } %>
+
+
+                        <% if(blogData.count>blogData.blogList.length){ %>
+                            <%- include('widgets/load-more',{ pageSize:blogData.pageSize, pageIndex:blogData.pageIndex,
+                                count:blogData.count, containerSelector:'#container-weibo-list',
+                                api:'/api/square/load-more/'+blogData.userName }) %>
+
+                                <div class="layui-col-md4">
+                                    <div class="grid-demo grid-demo-bg1">
+
+                                    </div>
+                                </div>
+                                <% } %>
+                                    <%- include('layerout/footer', { title:'微博-错误页面',isNav:true }) %>

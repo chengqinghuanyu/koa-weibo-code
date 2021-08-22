@@ -1,7 +1,7 @@
 <!--
  * @Author: 尹鹏孝
  * @Date: 2021-08-21 09:52:35
- * @LastEditTime: 2021-08-21 17:41:27
+ * @LastEditTime: 2021-08-22 11:47:57
  * @LastEditors: Please set LastEditors
  * @Description: 微博列表
  * @FilePath: /nodejs/koa2-weibo-code/src/views/widgets/blog-list.ejs
@@ -18,7 +18,7 @@
         <div class="content clear-fix">
             <% if(blog.image) { %>
                 <a href="../../<%= blog.image %>" target="_blank">
-                    <img src="../../<%= blog.image %>">
+                    <img src="../../<%= blog.image %>" class='user-picture'>
                 </a>
                 <% } %>
                     <a href="/profile/<%= blog.user.userName %>">

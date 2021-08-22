@@ -4,7 +4,7 @@
 import { session } from 'express-session';
  * @Author: 尹鹏孝
  * @Date: 2021-08-08 09:51:46
- * @LastEditTime: 2021-08-21 17:14:05
+ * @LastEditTime: 2021-08-22 11:03:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /nodejs/koa2-weibo-code/src/routes/views/blog.js
@@ -16,6 +16,9 @@ var _require = require('../../middleWares/loginChecks.js'),
 
 var _require2 = require('../../controller/blog-profile.js'),
     getProfileBlogList = _require2.getProfileBlogList;
+
+var _require3 = require('../../controller/blog-square.js'),
+    getSquareBlogList = _require3.getSquareBlogList;
 
 var moment = require('moment'); //首页
 
@@ -86,6 +89,43 @@ router.get('/profile/:userName', loginRedirect, function _callee3(ctx, next) {
         case 8:
         case "end":
           return _context3.stop();
+      }
+    }
+  });
+}); //微博广场
+
+router.get('/square', loginRedirect, function _callee4(ctx, next) {
+  var result, _result$data2, isEmpty, blogList, pageSize, pageIndex, count;
+
+  return regeneratorRuntime.async(function _callee4$(_context4) {
+    while (1) {
+      switch (_context4.prev = _context4.next) {
+        case 0:
+          _context4.next = 2;
+          return regeneratorRuntime.awrap(getSquareBlogList(0));
+
+        case 2:
+          result = _context4.sent;
+          _result$data2 = result.data, isEmpty = _result$data2.isEmpty, blogList = _result$data2.blogList, pageSize = _result$data2.pageSize, pageIndex = _result$data2.pageIndex, count = _result$data2.count; //获取第一页数据 
+
+          blogList.forEach(function (item) {
+            item.createdAt = moment(item.createdAt).format('YYYY-MM-DD h:mm:ss a');
+            item.updatedAt = moment(item.updatedAt).format('YYYY-MM-DD h:mm:ss a');
+          });
+          _context4.next = 7;
+          return regeneratorRuntime.awrap(ctx.render('square', {
+            blogData: {
+              isEmpty: isEmpty,
+              blogList: blogList,
+              pageSize: pageSize,
+              pageIndex: pageIndex,
+              count: count
+            }
+          }));
+
+        case 7:
+        case "end":
+          return _context4.stop();
       }
     }
   });
