@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-08-11 22:31:24
- * @LastEditTime: 2021-08-11 22:34:50
+ * @LastEditTime: 2021-08-22 09:29:44
  * @LastEditors: Please set LastEditors
  * @Description: 设置用户cookie
  * @FilePath: /nodejs/koa2-weibo-code/test/testUserInfo.js
@@ -11,7 +11,7 @@
  *  每次测试用户都需要重新更新这里的cookie
  */
 module.exports = {
-
-    COOKIE: 'weibo_sid=TiTzpJfqW_ebONkJuqdU4eLuiUs0Oj8t; weibo_sid.sig=6WTLn5JzKjVmOu_nQcwTUWEbrcs',
+    USER_NAME: "yinpengxiao4",
+    COOKIE: 'weibo_sid=vi2H7e4RfLyVlacWmrEMMd50q-YIL3Bh; weibo_sid.sig=TZsiGYpFBJub2t0PfCQNw4MhfQw',
 
 }

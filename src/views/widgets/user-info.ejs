@@ -1,0 +1,26 @@
+<!--
+ * @Author: 尹鹏孝
+ * @Date: 2021-08-21 09:37:11
+ * @LastEditTime: 2021-08-21 09:47:02
+ * @LastEditors: Please set LastEditors
+ * @Description: 个人信息
+ * @FilePath: /nodejs/koa2-weibo-code/src/views/widgets/user-info.ejs
+-->
+<div>
+    <img src="<%= userInfo.picture %>" alt="" sizes="" srcset="">
+    <h4>
+        <%= userInfo.nickName %>
+    </h4>
+
+</div>
+<% if(isMe) { %>
+    <p>
+        <a href="/at-me">
+            @提到我的 <% locals.atCount %>
+        </a>
+    </p>
+    <% } else { %>
+        <p>
+            <button>关注/取消关注</button>
+        </p>
+        <% } %>

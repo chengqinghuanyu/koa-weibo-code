@@ -1,3 +1,5 @@
+"use strict";
+
 /*
  * @Author: your name
  * @Date: 2021-07-17 21:40:31
@@ -6,6 +8,8 @@
  * @Description: jest server
  * @FilePath: /nodejs/koa2-weibo-code/test/server.js
  */
-const request = require('supertest');
-const server = require('../src/app.js').callback();
+var request = require('supertest');
+
+var server = require('../src/app.js').callback();
+
 module.exports = request(server);

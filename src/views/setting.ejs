@@ -216,7 +216,7 @@
                     userInfo.picture = picture;
                 }
                 userInfo.userName = "<%= userName %>";
-                console.log('输出数据格式', userInfo);
+
                 $.ajax({
                     url: "/api/users/changeInfo",
                     type: "patch",

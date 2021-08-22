@@ -1,0 +1,48 @@
+<!--
+ * @Author: 尹鹏孝
+ * @Date: 2021-08-21 09:52:35
+ * @LastEditTime: 2021-08-21 17:41:27
+ * @LastEditors: Please set LastEditors
+ * @Description: 微博列表
+ * @FilePath: /nodejs/koa2-weibo-code/src/views/widgets/blog-list.ejs
+-->
+<style scoped>
+    .user-picture {
+        width: 30px;
+        height: 30px;
+    }
+</style>
+<% blogData.blogList.forEach(function(blog){ %>
+    <div class="item-wrapper">
+        <img src="../../<%= blog.user.picture %>" class="user-picture">
+        <div class="content clear-fix">
+            <% if(blog.image) { %>
+                <a href="../../<%= blog.image %>" target="_blank">
+                    <img src="../../<%= blog.image %>">
+                </a>
+                <% } %>
+                    <a href="/profile/<%= blog.user.userName %>">
+                        <%= blog.user.nickName%>
+                    </a>
+                    <span>
+                        <%= blog.content %>
+                    </span>
+        </div>
+        <div class="info">
+            <span>
+                <%= blog.createdAt %>&nbsp;
+            </span>
+            <% if(locals.canReply){ %>
+                <%# 可以回复 %>
+                    <a href="#" class="blog-list-reply" data-content="<%= blog.content%>"
+                        data-userName="<%= blog.user.userName%>" data-nickName="<%= blog.user.nickName%>">
+                        <i class="fa fa-mail-reply"></i>
+                        回复
+                        >
+
+                    </a>
+                    <% } %>
+        </div>
+    </div>
+    <% }) %>
+        <div id="container-weibo-list"></div>

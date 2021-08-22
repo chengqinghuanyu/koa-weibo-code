@@ -1,0 +1,45 @@
+<!--
+ * @Author: 尹鹏孝
+ * @Date: 2021-08-21 10:13:57
+ * @LastEditTime: 2021-08-21 18:05:41
+ * @LastEditors: Please set LastEditors
+ * @Description: 加载更多
+ * @FilePath: /nodejs/koa2-weibo-code/src/views/widgets/load-more.ejs
+-->
+<div class="margin-bottom-20">
+    <button class="btn-load-more" id="btn-load-more">加载更多</button>
+</div>
+<script>
+
+    var pageSize = "<%= pageSize %>";
+    var pageIndex = parseInt("<%= pageIndex %>") + 1;
+    var count = "<%= count %>";
+    var loadMore = $("#btn-load-more");
+    var container = $('<%= containerSelector%>')
+    var api = '<%= api %>';
+
+    loadMore.on('click', function () {
+
+        $.get(api + "/" + pageIndex, function (data) {
+
+            pageIndex = pageIndex + 1;
+            if (data.errno == 0) {
+
+                if (((pageIndex + 1) * pageSize) > count) {
+                    loadMore.hide();
+                }
+                var $tempContainer = $(data.data.tpl);
+
+                $tempContainer.each((index, item) => {
+                    if (item.nodeType !== 1) {
+                        return
+                    }
+                    container.append(item)
+                })
+            }
+
+
+        })
+    })
+
+</script>
