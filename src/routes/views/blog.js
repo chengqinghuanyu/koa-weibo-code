@@ -2,12 +2,15 @@
 import { session } from 'express-session';
  * @Author: 尹鹏孝
  * @Date: 2021-08-08 09:51:46
- * @LastEditTime: 2021-08-22 11:03:28
+ * @LastEditTime: 2021-08-23 21:20:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /nodejs/koa2-weibo-code/src/routes/views/blog.js
  */
 const router = require('koa-router')();
+const {
+    getFans
+} = require('../../controller/user-relation.js');
 const {
     loginRedirect
 } = require('../../middleWares/loginChecks.js');
@@ -47,7 +50,14 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
         item.createdAt = moment(item.createdAt).format('YYYY-MM-DD h:mm:ss a');
         item.updatedAt = moment(item.updatedAt).format('YYYY-MM-DD h:mm:ss a');
     });
-
+    //获取粉丝
+    const fansResult = await getFans(currentUser.id);
+    const {
+        count: fansCount,
+        userList: fansList
+    } = fansResult.data;
+    console.log('输出：：：：fansCount', fansResult.data);
+    console.log(fansList);
     await ctx.render('profile', {
         blogData: {
             isEmpty,
@@ -56,6 +66,15 @@ router.get('/profile/:userName', loginRedirect, async (ctx, next) => {
             pageIndex,
             count,
             userName: currentUser
+        },
+        userData: {
+            userInfo: currentUser,
+            isMe: '',
+            fansData: {
+                count: fansCount,
+                list: fansList
+            }
+
         }
     });
 

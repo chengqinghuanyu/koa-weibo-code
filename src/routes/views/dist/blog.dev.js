@@ -4,21 +4,24 @@
 import { session } from 'express-session';
  * @Author: 尹鹏孝
  * @Date: 2021-08-08 09:51:46
- * @LastEditTime: 2021-08-22 11:03:28
+ * @LastEditTime: 2021-08-23 21:20:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /nodejs/koa2-weibo-code/src/routes/views/blog.js
  */
 var router = require('koa-router')();
 
-var _require = require('../../middleWares/loginChecks.js'),
-    loginRedirect = _require.loginRedirect;
+var _require = require('../../controller/user-relation.js'),
+    getFans = _require.getFans;
 
-var _require2 = require('../../controller/blog-profile.js'),
-    getProfileBlogList = _require2.getProfileBlogList;
+var _require2 = require('../../middleWares/loginChecks.js'),
+    loginRedirect = _require2.loginRedirect;
 
-var _require3 = require('../../controller/blog-square.js'),
-    getSquareBlogList = _require3.getSquareBlogList;
+var _require3 = require('../../controller/blog-profile.js'),
+    getProfileBlogList = _require3.getProfileBlogList;
+
+var _require4 = require('../../controller/blog-square.js'),
+    getSquareBlogList = _require4.getSquareBlogList;
 
 var moment = require('moment'); //首页
 
@@ -56,7 +59,7 @@ router.get('/profile', loginRedirect, function _callee2(ctx, next) {
   });
 });
 router.get('/profile/:userName', loginRedirect, function _callee3(ctx, next) {
-  var currentUser, result, _result$data, isEmpty, blogList, pageSize, pageIndex, count;
+  var currentUser, result, _result$data, isEmpty, blogList, pageSize, pageIndex, count, fansResult, _fansResult$data, fansCount, fansList;
 
   return regeneratorRuntime.async(function _callee3$(_context3) {
     while (1) {
@@ -73,8 +76,17 @@ router.get('/profile/:userName', loginRedirect, function _callee3(ctx, next) {
           blogList.forEach(function (item) {
             item.createdAt = moment(item.createdAt).format('YYYY-MM-DD h:mm:ss a');
             item.updatedAt = moment(item.updatedAt).format('YYYY-MM-DD h:mm:ss a');
-          });
+          }); //获取粉丝
+
           _context3.next = 8;
+          return regeneratorRuntime.awrap(getFans(currentUser.id));
+
+        case 8:
+          fansResult = _context3.sent;
+          _fansResult$data = fansResult.data, fansCount = _fansResult$data.count, fansList = _fansResult$data.userList;
+          console.log('输出：：：：fansCount', fansResult.data);
+          console.log(fansList);
+          _context3.next = 14;
           return regeneratorRuntime.awrap(ctx.render('profile', {
             blogData: {
               isEmpty: isEmpty,
@@ -83,10 +95,18 @@ router.get('/profile/:userName', loginRedirect, function _callee3(ctx, next) {
               pageIndex: pageIndex,
               count: count,
               userName: currentUser
+            },
+            userData: {
+              userInfo: currentUser,
+              isMe: '',
+              fansData: {
+                count: fansCount,
+                list: fansList
+              }
             }
           }));
 
-        case 8:
+        case 14:
         case "end":
           return _context3.stop();
       }

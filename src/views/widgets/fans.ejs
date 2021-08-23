@@ -1,0 +1,24 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-08-22 18:50:37
+ * @LastEditTime: 2021-08-23 21:26:21
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /nodejs/koa2-weibo-code/src/views/widgets/fan.ejs
+-->
+<div class="user-list right-item">
+    <p class="title blod">
+        <i class="fa fa-users"></i>
+        粉丝（<%= count %>）
+    </p>
+    <div class="user-list clear-fix">
+        <% userList.forEach(user=>{ %>
+            <a href="/profile/<%= user.userName %>" class="user-name">
+                <img src="<% user.image%>">
+                <span>
+                    <%= user.nickName%>
+                </span>
+            </a>
+            <% }) %>
+    </div>
+</div>

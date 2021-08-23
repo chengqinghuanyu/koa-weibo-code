@@ -1,7 +1,7 @@
 <!--
  * @Author: 尹鹏孝
  * @Date: 2021-08-21 09:35:46
- * @LastEditTime: 2021-08-21 17:33:51
+ * @LastEditTime: 2021-08-23 21:15:36
  * @LastEditors: Please set LastEditors
  * @Description: 个人主页
  * @FilePath: /nodejs/koa2-weibo-code/src/views/profile.ejs
@@ -35,10 +35,16 @@
                                 count:blogData.count, containerSelector:'#container-weibo-list',
                                 api:'/api/profile/load-more/'+blogData.userName }) %>
 
-                                <div class="layui-col-md4">
-                                    <div class="grid-demo grid-demo-bg1">
 
-                                    </div>
-                                </div>
                                 <% } %>
-                                    <%- include('layerout/footer', { title:'微博-错误页面',isNav:true }) %>
+        </div>
+        <div class="layui-col-md4">
+            <div class="user-info">
+                <%- include('widgets/user-info',{ userInfo:userData.userInfo, isMe:userData.isMe }) %>
+            </div>
+            <div class="user-fans">
+                <%- include('widgets/fans',{ count:userData.fansData.count, userList:userData.fansData.list })%>
+            </div>
+        </div>
+    </div>
+    <%- include('layerout/footer', { title:'微博-错误页面',isNav:true }) %>
