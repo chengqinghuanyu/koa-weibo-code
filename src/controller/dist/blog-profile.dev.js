@@ -3,7 +3,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-08-21 15:04:35
- * @LastEditTime: 2021-08-22 11:04:35
+ * @LastEditTime: 2021-08-25 22:32:21
  * @LastEditors: Please set LastEditors
  * @Description: 个人主页
  * @FilePath: /nodejs/koa2-weibo-code/src/controller/blog-profile.js
@@ -34,17 +34,17 @@ function getProfileBlogList(_ref) {
           //service
           if (!pageIndex) {
             pageIndex = 0;
-          }
+          } //console.log('输出页面：', pageIndex);
 
-          console.log('输出页面：', pageIndex);
-          _context.next = 5;
+
+          _context.next = 4;
           return regeneratorRuntime.awrap(getBlogListByUser({
             userName: userName,
             pageIndex: pageIndex,
             pageSize: PAGE_SIZE
           }));
 
-        case 5:
+        case 4:
           result = _context.sent;
           blogList = result.blogList;
           return _context.abrupt("return", new SuccessModel({
@@ -55,7 +55,7 @@ function getProfileBlogList(_ref) {
             count: result.count
           }));
 
-        case 8:
+        case 7:
         case "end":
           return _context.stop();
       }

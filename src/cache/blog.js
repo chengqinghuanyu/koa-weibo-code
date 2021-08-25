@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-08-22 11:15:04
- * @LastEditTime: 2021-08-22 11:57:32
+ * @LastEditTime: 2021-08-25 22:34:45
  * @LastEditors: Please set LastEditors
  * @Description: 微博缓存
  * @FilePath: /nodejs/koa2-weibo-code/src/cache/blog.js
@@ -26,10 +26,10 @@ async function getSquareCatchList({
 }) {
     const key = `${KEY_PREFIX}${pageIndex}_${pageSize}`;
     //尝试获取缓存
-    console.log('缓存：1111');
+    //console.log('缓存：1111');
     const catchResult = await get(key);
-    console.log('我的缓存：',
-        catchResult);
+    // console.log('我的缓存：',
+    //     catchResult);
     if (catchResult != null) {
         return catchResult;
     }

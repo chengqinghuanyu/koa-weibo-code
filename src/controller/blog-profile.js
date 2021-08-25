@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-08-21 15:04:35
- * @LastEditTime: 2021-08-22 11:04:35
+ * @LastEditTime: 2021-08-25 22:32:21
  * @LastEditors: Please set LastEditors
  * @Description: 个人主页
  * @FilePath: /nodejs/koa2-weibo-code/src/controller/blog-profile.js
@@ -29,7 +29,7 @@ async function getProfileBlogList({
     if (!pageIndex) {
         pageIndex = 0;
     }
-    console.log('输出页面：', pageIndex);
+    //console.log('输出页面：', pageIndex);
     const result = await getBlogListByUser({
         userName,
         pageIndex,

@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-07-18 20:27:39
- * @LastEditTime: 2021-08-07 22:03:06
+ * @LastEditTime: 2021-08-24 21:52:21
  * @LastEditors: Please set LastEditors
  * @Description: 用户的服务逻辑 user service
  * @FilePath: /nodejs/koa2-weibo-code/src/services/user.js
@@ -40,7 +40,7 @@ async function getUserInfo(userName, password) {
     }
     //格式化
     const formatRes = formatUser(result.dataValues);
-    //console.log('输出用户查找结果', result);
+
     return formatRes;
 }
 /**

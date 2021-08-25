@@ -1,7 +1,7 @@
 <!--
  * @Author: 尹鹏孝
  * @Date: 2021-08-21 09:37:11
- * @LastEditTime: 2021-08-21 09:47:02
+ * @LastEditTime: 2021-08-25 21:44:22
  * @LastEditors: Please set LastEditors
  * @Description: 个人信息
  * @FilePath: /nodejs/koa2-weibo-code/src/views/widgets/user-info.ejs
@@ -21,6 +21,45 @@
     </p>
     <% } else { %>
         <p>
-            <button>关注/取消关注</button>
+
+            <% if(amFollowed) {%>
+                <button style="display: none;" id="cancel">取消关注</button>
+                <% }else{%>
+
+                    <button style="display: none;" id="fans">关注</button>
+                    <% }%>
         </p>
+
         <% } %>
+
+            <script>
+                $(function () {
+                    var amFollowed = '<%= amFollowed %>';
+                    var curUserId = "<%= userInfo.id%>"
+                    if (amFollowed == 'true') {
+                        $("#cancel").show();
+                    } else {
+                        $("#fans").show();
+                    }
+
+                    $("#fans").on("click", function () {
+                        $.post('/api/profile/follow', {
+                            userId: curUserId
+                        }, function (err) {
+                            $("#fans").hide();
+                            $("#cancel").show();
+                            location.reload();
+                        })
+                    });
+
+                    $("#cancel").on("click", function () {
+                        $.post('/api/profile/unFollow', {
+                            userId: curUserId
+                        }, function (err) {
+                            $("#fans").show();
+                            $("#cancel").hide();
+                            location.reload();
+                        })
+                    });
+                })
+            </script>

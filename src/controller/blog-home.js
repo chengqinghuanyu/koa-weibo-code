@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-08-08 20:18:51
- * @LastEditTime: 2021-08-11 22:03:32
+ * @LastEditTime: 2021-08-25 22:34:57
  * @LastEditors: Please set LastEditors
  * @Description: 首页微博
  * @FilePath: /nodejs/koa2-weibo-code/src/controller/blog-home.js
@@ -29,7 +29,7 @@ async function create({
 }) {
     //service
     try {
-        console.log('ctrol:', userId);
+        //console.log('ctrol:', userId);
         const blog = await createBlog({
             userId,
             content: xss(content),

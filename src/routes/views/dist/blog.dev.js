@@ -1,10 +1,9 @@
 "use strict";
 
 /*
-import { session } from 'express-session';
  * @Author: 尹鹏孝
  * @Date: 2021-08-08 09:51:46
- * @LastEditTime: 2021-08-23 21:20:52
+ * @LastEditTime: 2021-08-25 22:32:04
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /nodejs/koa2-weibo-code/src/routes/views/blog.js
@@ -12,16 +11,21 @@ import { session } from 'express-session';
 var router = require('koa-router')();
 
 var _require = require('../../controller/user-relation.js'),
-    getFans = _require.getFans;
+    getFans = _require.getFans,
+    getFollowers = _require.getFollowers;
 
 var _require2 = require('../../middleWares/loginChecks.js'),
-    loginRedirect = _require2.loginRedirect;
+    loginRedirect = _require2.loginRedirect,
+    loginCheck = _require2.loginCheck;
 
 var _require3 = require('../../controller/blog-profile.js'),
     getProfileBlogList = _require3.getProfileBlogList;
 
 var _require4 = require('../../controller/blog-square.js'),
     getSquareBlogList = _require4.getSquareBlogList;
+
+var _require5 = require('../../services/user.js'),
+    getUserInfo = _require5.getUserInfo;
 
 var moment = require('moment'); //首页
 
@@ -59,7 +63,7 @@ router.get('/profile', loginRedirect, function _callee2(ctx, next) {
   });
 });
 router.get('/profile/:userName', loginRedirect, function _callee3(ctx, next) {
-  var currentUser, result, _result$data, isEmpty, blogList, pageSize, pageIndex, count, fansResult, _fansResult$data, fansCount, fansList;
+  var currentUser, currUserInfo, userInfo, result, _result$data, isEmpty, blogList, pageSize, pageIndex, count, fansResult, _fansResult$data, fansCount, fansList, followersResult, _followersResult$data, followersList, followersCount, amFollowed;
 
   return regeneratorRuntime.async(function _callee3$(_context3) {
     while (1) {
@@ -67,9 +71,16 @@ router.get('/profile/:userName', loginRedirect, function _callee3(ctx, next) {
         case 0:
           currentUser = ctx.params.userName;
           _context3.next = 3;
-          return regeneratorRuntime.awrap(getProfileBlogList(currentUser, 0));
+          return regeneratorRuntime.awrap(getUserInfo(currentUser));
 
         case 3:
+          currUserInfo = _context3.sent;
+          //console.log('获取当前用信息：', currUserInfo);
+          userInfo = ctx.session.userInfo;
+          _context3.next = 7;
+          return regeneratorRuntime.awrap(getProfileBlogList(currentUser, 0));
+
+        case 7:
           result = _context3.sent;
           _result$data = result.data, isEmpty = _result$data.isEmpty, blogList = _result$data.blogList, pageSize = _result$data.pageSize, pageIndex = _result$data.pageIndex, count = _result$data.count; //获取第一页数据 
 
@@ -78,15 +89,28 @@ router.get('/profile/:userName', loginRedirect, function _callee3(ctx, next) {
             item.updatedAt = moment(item.updatedAt).format('YYYY-MM-DD h:mm:ss a');
           }); //获取粉丝
 
-          _context3.next = 8;
-          return regeneratorRuntime.awrap(getFans(currentUser.id));
+          _context3.next = 12;
+          return regeneratorRuntime.awrap(getFans(currUserInfo.id));
 
-        case 8:
+        case 12:
           fansResult = _context3.sent;
-          _fansResult$data = fansResult.data, fansCount = _fansResult$data.count, fansList = _fansResult$data.userList;
-          console.log('输出：：：：fansCount', fansResult.data);
-          console.log(fansList);
-          _context3.next = 14;
+          _fansResult$data = fansResult.data, fansCount = _fansResult$data.count, fansList = _fansResult$data.userList; //console.log('粉丝列表：', fansList);
+          //获取关注人列表
+
+          _context3.next = 16;
+          return regeneratorRuntime.awrap(getFollowers(currUserInfo.id));
+
+        case 16:
+          followersResult = _context3.sent;
+          _followersResult$data = followersResult.data, followersList = _followersResult$data.followersList, followersCount = _followersResult$data.count; //我是否关注了此人
+
+          amFollowed = fansList.some(function (item) {
+            return item.userName == userInfo.userName;
+          }); // console.log('是否被关注：', amFollowed);
+          // console.log('关注人列表：', followersCount);
+          // console.log('关注人列表：', followersList);
+
+          _context3.next = 21;
           return regeneratorRuntime.awrap(ctx.render('profile', {
             blogData: {
               isEmpty: isEmpty,
@@ -97,16 +121,21 @@ router.get('/profile/:userName', loginRedirect, function _callee3(ctx, next) {
               userName: currentUser
             },
             userData: {
-              userInfo: currentUser,
+              userInfo: currUserInfo,
               isMe: '',
               fansData: {
                 count: fansCount,
                 list: fansList
-              }
+              },
+              followersData: {
+                list: followersList,
+                count: followersCount
+              },
+              amFollowed: amFollowed
             }
           }));
 
-        case 14:
+        case 21:
         case "end":
           return _context3.stop();
       }
@@ -132,7 +161,8 @@ router.get('/square', loginRedirect, function _callee4(ctx, next) {
             item.createdAt = moment(item.createdAt).format('YYYY-MM-DD h:mm:ss a');
             item.updatedAt = moment(item.updatedAt).format('YYYY-MM-DD h:mm:ss a');
           });
-          _context4.next = 7;
+          console.log('输出广场列表数据：', blogList);
+          _context4.next = 8;
           return regeneratorRuntime.awrap(ctx.render('square', {
             blogData: {
               isEmpty: isEmpty,
@@ -143,7 +173,7 @@ router.get('/square', loginRedirect, function _callee4(ctx, next) {
             }
           }));
 
-        case 7:
+        case 8:
         case "end":
           return _context4.stop();
       }

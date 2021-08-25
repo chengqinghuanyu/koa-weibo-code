@@ -3,7 +3,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-08-08 20:21:22
- * @LastEditTime: 2021-08-22 10:06:34
+ * @LastEditTime: 2021-08-25 22:35:47
  * @LastEditors: Please set LastEditors
  * @Description: 微博 service
  * @FilePath: /nodejs/koa2-weibo-code/src/services/blog.js
@@ -76,9 +76,7 @@ function getBlogListByUser(_ref2) {
           } //执行查询
 
 
-          console.log(pageSize);
-          console.log(pageSize);
-          _context2.next = 7;
+          _context2.next = 5;
           return regeneratorRuntime.awrap(Blog.findAndCountAll({
             limit: pageSize,
             //每页条数
@@ -92,7 +90,7 @@ function getBlogListByUser(_ref2) {
             }]
           }));
 
-        case 7:
+        case 5:
           result = _context2.sent;
           //分页总数，result.row,result.count
           blogList = result.rows.map(function (row) {
@@ -108,7 +106,7 @@ function getBlogListByUser(_ref2) {
             blogList: blogList
           });
 
-        case 11:
+        case 9:
         case "end":
           return _context2.stop();
       }

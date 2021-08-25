@@ -1,7 +1,7 @@
 /*
  * @Author: 尹鹏孝
  * @Date: 2021-08-08 20:21:22
- * @LastEditTime: 2021-08-22 10:06:34
+ * @LastEditTime: 2021-08-25 22:35:47
  * @LastEditors: Please set LastEditors
  * @Description: 微博 service
  * @FilePath: /nodejs/koa2-weibo-code/src/services/blog.js
@@ -58,8 +58,6 @@ async function getBlogListByUser({
     }
 
     //执行查询
-    console.log(pageSize);
-    console.log(pageSize);
     const result = await Blog.findAndCountAll({
         limit: pageSize, //每页条数
         offset: pageSize * pageIndex, //跳过调试
